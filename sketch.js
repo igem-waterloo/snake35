@@ -1,5 +1,5 @@
 var snake;
-var pixelSize = 40;
+var pixelSize = 30;
 var shots = [];
 var movement = [];
 var highscore = 0;
@@ -13,7 +13,7 @@ var shotColours = {
 };
 
 function setup(){
-  createCanvas(800, 800);
+  createCanvas(810, 810);
   frameRate(10);
 }
 
