@@ -15,8 +15,8 @@ function initGame(){
 	var name = 'Snake Game';
 	textSize(50);
 	fill(255);
-	nameWidht = textWidth(name);
-	text(name, (width - nameWidht)/2, height/2 - 40);
+	nameWidth = textWidth(name);
+	text(name, (width - nameWidth)/2, height/2 - 40);
 	startBtn = createButton('Start Game');
 	startBtn.position(width/2 - startBtn.width/2, height/2);
 	startBtn.mousePressed(startGame);
