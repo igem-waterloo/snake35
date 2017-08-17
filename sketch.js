@@ -4,6 +4,12 @@ var shots = [];
 var movement = [];
 var highscore = 0;
 var gameState = 'init';
+var shotTypes = ['a', 'b', 'd'];
+var shotColours = {
+  'a': [255, 0, 0, 255],
+  'b': [0, 255, 0, 255],
+  'd': [0, 0, 255, 255],
+};
 
 function setup(){
   createCanvas(600, 600);
@@ -44,11 +50,11 @@ function runGame(){
 
 	fill(0, 255, 0, 100);
 	for(var i=0;i<shots.length;i++){
-        fill(0, 255, 0, shots[i].brightness);
+        fill(shots[i].colour);
 		rect(shots[i].x, shots[i].y, pixelSize, pixelSize);
 		if(snake.eat(shots[i])){
 			snake.tail.push(createVector(snake.x, snake.y));
-            snake.tailColours.push(shots[i].brightness)
+            snake.tailColours.push(shots[i].colour)
 			shots.splice(i, 1);
 			setJelloShots(1);
 			if(snake.tail.length > highscore) highscore = snake.tail.length;
@@ -84,6 +90,11 @@ function draw(){
 	}
 }
 
+function getRandomShot(){
+  shotType = shotTypes[floor(random(shotTypes.length))];
+  return shotColours[shotType];
+}
+
 function setJelloShots(num){
   var cols = floor(width / pixelSize);
   var rows = floor(height / pixelSize);
@@ -92,7 +103,7 @@ function setJelloShots(num){
     while(snakeIntersect(location)){
       location = createVector(floor(random(cols)), floor(random(rows))).mult(pixelSize);
     }
-    location.brightness = floor(random(100));
+    location.colour = getRandomShot();
     shots.push(location);
   }
 }
