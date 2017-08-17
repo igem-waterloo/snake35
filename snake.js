@@ -1,12 +1,14 @@
 function Snake(){
   this.show = function(){
-    fill(255);
     //draw the snake tail
     for(var i=0;i<this.tail.length;i++){
+      b = this.tailColours[this.tail.length - 1 - i];
+      fill(0, 255, 0, b);
       rect(this.tail[i].x, this.tail[i].y, pixelSize, pixelSize);
     }
 
     //draw the snake head
+    fill(0, 255, 0, this.tailColours[this.tailColours.length - 1]);
     rect(this.pos.x, this.pos.y, pixelSize, pixelSize)
   }
 
@@ -49,6 +51,7 @@ function Snake(){
   this.reset = function(){
     shots = [];
     this.tail = [];
+    this.tailColours = [100];
     this.pos = createVector(0, 0);
     this.speed = createVector(1, 0);
   }

@@ -1,5 +1,5 @@
 var snake;
-var pixelSize = 20;
+var pixelSize = 40;
 var shots = [];
 var movement = [];
 var highscore = 0;
@@ -44,9 +44,11 @@ function runGame(){
 
 	fill(0, 255, 0, 100);
 	for(var i=0;i<shots.length;i++){
+        fill(0, 255, 0, shots[i].brightness);
 		rect(shots[i].x, shots[i].y, pixelSize, pixelSize);
 		if(snake.eat(shots[i])){
 			snake.tail.push(createVector(snake.x, snake.y));
+            snake.tailColours.push(shots[i].brightness)
 			shots.splice(i, 1);
 			setJelloShots(1);
 			if(snake.tail.length > highscore) highscore = snake.tail.length;
@@ -90,6 +92,7 @@ function setJelloShots(num){
     while(snakeIntersect(location)){
       location = createVector(floor(random(cols)), floor(random(rows))).mult(pixelSize);
     }
+    location.brightness = floor(random(100));
     shots.push(location);
   }
 }
