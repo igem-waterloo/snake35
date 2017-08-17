@@ -79,11 +79,11 @@ function endGame(){
 	textSize(32);
 	var msg = 'Game Over';
 	var score = 'Your Score is ' + snake.score;
-	msgWidht = textWidth(msg);
-	scoreWidht = textWidth(score);
+	msgWidth = textWidth(msg);
+	scoreWidth = textWidth(score);
 	fill(255);
-	text(msg, (width - msgWidht)/2, height/2 - 40);
-	text(score, (width - scoreWidht)/2, height/2);
+	text(msg, (width - msgWidth)/2, height/2 - 40);
+	text(score, (width - scoreWidth)/2, height/2);
 	startBtn = createButton('Restart Game');
 	startBtn.position(width/2 - startBtn.width/2, height/2 + 40);
 	startBtn.mousePressed(startGame);
