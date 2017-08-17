@@ -3,11 +3,11 @@ function Snake(){
     fill(255);
     //draw the snake tail
     for(var i=0;i<this.tail.length;i++){
-      rect(this.tail[i].x, this.tail[i].y, pixel_size, pixel_size);
+      rect(this.tail[i].x, this.tail[i].y, pixelSize, pixelSize);
     }
 
     //draw the snake head
-    rect(this.pos.x, this.pos.y, pixel_size, pixel_size)
+    rect(this.pos.x, this.pos.y, pixelSize, pixelSize)
   }
 
   this.update = function(){
@@ -22,8 +22,8 @@ function Snake(){
     this.tail.unshift(createVector(this.pos.x, this.pos.y));
     this.tail.pop();
     //move the snake
-    this.pos.x += this.speed.x * pixel_size;
-    this.pos.y += this.speed.y * pixel_size;
+    this.pos.x += this.speed.x * pixelSize;
+    this.pos.y += this.speed.y * pixelSize;
   }
 
   this.dir = function(x, y){
