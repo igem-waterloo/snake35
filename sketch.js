@@ -94,7 +94,7 @@ function setJelloShots(num){
   }
 }
 
-function snake_intersect(location){
+function snakeIntersect(location){
   var intersect = false;
   if(location.x == snake.pos.x && location.y == snake.pos.y){
     intersect = true;
