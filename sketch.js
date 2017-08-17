@@ -4,11 +4,12 @@ var shots = [];
 var movement = [];
 var highscore = 0;
 var gameState = 'init';
-var shotTypes = ['a', 'b', 'd'];
+var shotTypes = ['cfp', 'yfp', 'sup35'];
 var shotColours = {
-  'a': [255, 0, 0, 255],
-  'b': [0, 255, 0, 255],
-  'd': [0, 0, 255, 255],
+  'cfp': [0, 255, 255, 255],
+  'yfp': [153, 153, 0, 255],
+  'brightYfp': [255, 255, 0, 255],
+  'sup35': [100, 100, 100, 255],
 };
 
 function setup(){
@@ -18,7 +19,7 @@ function setup(){
 
 function initGame(){
 	background(50, 50, 100);
-	var name = 'Snake Game';
+	var name = 'Snake35';
 	textSize(50);
 	fill(255);
 	nameWidth = textWidth(name);
@@ -41,7 +42,7 @@ function runGame(){
 	background(50, 50, 100);
 	textSize(12);
 	fill(255);
-	text("score: " + snake.tail.length, 1, 10);
+	text("score: " + snake.score, 1, 10);
 	text("highscore: " + highscore, 1, 24);
 
 	snake.update();
@@ -50,14 +51,25 @@ function runGame(){
 
 	fill(0, 255, 0, 100);
 	for(var i=0;i<shots.length;i++){
-        fill(shots[i].colour);
+        fill(shots[i].protein.colour);
 		rect(shots[i].x, shots[i].y, pixelSize, pixelSize);
 		if(snake.eat(shots[i])){
 			snake.tail.push(createVector(snake.x, snake.y));
-            snake.tailColours.push(shots[i].colour)
+            var thisProt = shots[i].protein;
+            var lastProt = snake.tailProteins[snake.tailProteins.length - 1];
+            if (thisProt.type === 'cfp' && lastProt.type === 'yfp') {
+                snake.tailProteins[snake.tailProteins.length - 1].type = 'brightYfp';
+                snake.tailProteins[snake.tailProteins.length - 1].colour = shotColours['brightYfp'];
+                snake.score++;
+            } else if (thisProt.type === 'yfp' && lastProt.type === 'cfp') {
+                thisProt.type = 'brightYfp';
+                thisProt.colour = shotColours['brightYfp'];
+                snake.score++;
+            }
+            snake.tailProteins.push(shots[i].protein);
 			shots.splice(i, 1);
 			setJelloShots(1);
-			if(snake.tail.length > highscore) highscore = snake.tail.length;
+			if(snake.score > highscore) highscore = snake.score;
 		}	
 	}
 }
@@ -66,7 +78,7 @@ function endGame(){
 	background(50, 50, 100);
 	textSize(32);
 	var msg = 'Game Over';
-	var score = 'Your Score is ' + snake.tail.length;
+	var score = 'Your Score is ' + snake.score;
 	msgWidht = textWidth(msg);
 	scoreWidht = textWidth(score);
 	fill(255);
@@ -92,7 +104,7 @@ function draw(){
 
 function getRandomShot(){
   shotType = shotTypes[floor(random(shotTypes.length))];
-  return shotColours[shotType];
+  return {'type': shotType, 'colour': shotColours[shotType]};
 }
 
 function setJelloShots(num){
@@ -103,7 +115,7 @@ function setJelloShots(num){
     while(snakeIntersect(location)){
       location = createVector(floor(random(cols)), floor(random(rows))).mult(pixelSize);
     }
-    location.colour = getRandomShot();
+    location.protein = getRandomShot();
     shots.push(location);
   }
 }
